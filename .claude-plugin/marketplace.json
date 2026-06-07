@@ -1,0 +1,23 @@
+{
+  "name": "chykalophia",
+  "owner": {
+    "name": "Chykalophia",
+    "url": "https://chykalophia.com"
+  },
+  "metadata": {
+    "description": "Chykalophia's CRO, deep-research, copywriting & reporting toolkit for Claude, Cowork, and Claude Code.",
+    "version": "0.3.0"
+  },
+  "plugins": [
+    {
+      "name": "cro-research-reporting",
+      "source": ".",
+      "description": "Audit conversion funnels, run deep sourced research, write conversion copy and outbound/positioning, and produce render-safe reports + annotated redesign blueprints.",
+      "version": "0.3.0",
+      "author": { "name": "Chykalophia" },
+      "license": "MIT",
+      "category": "marketing",
+      "keywords": ["cro", "conversion", "ecommerce", "shopify", "pdp", "audit", "experimentation", "deep-research", "report", "copywriting", "positioning"]
+    }
+  ]
+}
