@@ -46,7 +46,7 @@ No configuration required. More powerful when connected (all optional):
 - **A codebase/theme export** (file access) — maps findings to real files and supports the Liquid build checklist.
 
 ## Install
-- **Marketplace:** `/plugin marketplace add <your-repo-or-path>` then install `cro-research-reporting`.
+- **Marketplace:** `/plugin marketplace add Chykalophia/cro-research-reporting` then install `cro-research-reporting`.
 - **Direct:** save the `.plugin` file via the install button, or place the folder in your plugins directory.
 
 ## Testing & iteration
