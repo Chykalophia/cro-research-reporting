@@ -15,8 +15,9 @@ Then ask the `cro-auditor` agent (or the skill) to score `references/heuristic-c
 | P3 | No | ATC sits below the description and tabs; not above the fold on mobile, no sticky bar |
 | P4 | No | ATC is grey-on-grey, the least prominent control |
 | P5 | No | One placeholder image, no in-scale shot |
-| P6 | Can't tell / No | No zoom behaviour present |
+| P6 | Can't tell | Zoom needs an interaction the captures don't perform |
 | P7 | Can't tell | Single image, no variants with media |
+| P8 | Can't tell / N/A | Only a size dropdown; no visual options to swatch |
 | P9 | No | No rating near the title |
 | P10 | No | No reviews at all |
 | P11 | No | No size guide link at the selector, EU sizes only |
@@ -26,8 +27,9 @@ Then ask the `cro-auditor` agent (or the skill) to score `references/heuristic-c
 | P15 | No | All three tabs are empty |
 | P16 | No | Description is four paragraphs of story, no bullets |
 | P17 | Yes | No horizontal scroll |
+| P18 | Can't tell | A local file gives no meaningful LCP; needs field data |
 
 Also expected:
-- Every item above lands in **Investigate** or **Just do it** only with corroboration; with no funnel or VoC data supplied, the auditor should say that most items stay at Low confidence and should ask for data, not promise lifts.
+- Checklist-only failures go to **Investigate**. **Just do it** is only for a cheap, reversible ★ failure or bug with at least one other evidence source, so with no funnel or VoC data supplied nothing should land there; the auditor should say items stay at Low confidence and ask for data, not promise lifts.
 - The "Unverified observations" list may mention the long brand story but must not present it as a finding.
 - The auditor must not invent reviews, traffic numbers or benchmark comparisons.

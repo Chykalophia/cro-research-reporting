@@ -18,7 +18,7 @@ Match what the user wants to the right skill, command, or agent. Skills auto-tri
 
 ## Skills vs commands vs agents
 - **Skills** load knowledge automatically when the request matches. Best for "just ask."
-- **Commands** (`/cro-audit`, `/deep-research`, `/build-report`, `/kickoff`) are explicit, accept flags, and can orchestrate.
+- **Commands** (`/cro-audit`, `/experiment`, `/deep-research`, `/build-report`, `/kickoff`) are explicit, accept flags, and can orchestrate.
 - **Agents** are delegated workers for heavy or parallel work (parallel research streams, a focused audit pass, the writer, the verifier). Commands and skills delegate to them.
 
 ## The end-to-end engagement playbook

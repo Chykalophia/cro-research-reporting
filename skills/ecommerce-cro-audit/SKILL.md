@@ -19,7 +19,7 @@ Find where a funnel leaks and why, and turn that into **evidence-tagged hypothes
 
 ## Why the method looks like this (evidence)
 - **AI page reviews alone are unreliable.** In Baymard's test, 80% of GPT-4's UX suggestions were false positives; current AI UX tools score 50–75% (https://baymard.com/blog/gpt-ux-audit, https://baymard.com/blog/ai-heuristic-evaluations). AI does well when it only classifies against fixed rules, so the page review here is a binary checklist on rendered screenshots.
-- **Most changes don't move revenue.** 10–33% of tested ideas win at mature companies and median lifts are near zero (`experiment-design/references/base-rates.md`). Impact claims must be humble and evidence-weighted.
+- **Most changes don't move revenue.** 10–33% of tested ideas win at mature companies and median lifts are near zero (`${CLAUDE_PLUGIN_ROOT}/skills/experiment-design/references/base-rates.md`). Impact claims must be humble and evidence-weighted.
 - **Research-backed ideas are the industry standard.** CXL/Speero ResearchXL and PXL both require analytics, customer and usability evidence behind a test idea. (Neither has published win-rate validation; treat them as sound process.)
 
 ## Operating principles
@@ -37,9 +37,9 @@ Find where a funnel leaks and why, and turn that into **evidence-tagged hypothes
 5. **Synthesise hypotheses** using the card below. Combine checklist failures, funnel data and VoC themes; one hypothesis can cite several. Sort each into a bucket:
    - **Instrument** — measurement is broken or missing.
    - **Just do it** — a ★ checklist failure or a bug, cheap and reversible, plus at least one other evidence source. Ship, annotate the date, monitor.
-   - **Test** — 2+ evidence sources and enough traffic (`experiment-design/scripts/power.py mde`).
+   - **Test** — 2+ evidence sources and enough traffic (`python3 ${CLAUDE_PLUGIN_ROOT}/skills/experiment-design/scripts/power.py mde`).
    - **Investigate** — single-source or heuristic-only; needs research before testing.
-6. **Prioritise** within Test by evidence strength (number and type of sources), reach (traffic on the page), lever prior from the client's test log (`test_log.py prior`), and effort. Prefer PXL-style yes/no criteria over 1–10 gut scores.
+6. **Prioritise** within Test by evidence strength (number and type of sources), reach (traffic on the page), lever prior from the client's test log (`python3 ${CLAUDE_PLUGIN_ROOT}/skills/experiment-design/scripts/test_log.py prior`), and effort. Prefer PXL-style yes/no criteria over 1–10 gut scores.
 7. **Plan tests** with `experiment-design` (pre-registration template, sizing, low-traffic path).
 8. **Deliver** with `report-information-design`; run `cro-verifier` before it ships.
 

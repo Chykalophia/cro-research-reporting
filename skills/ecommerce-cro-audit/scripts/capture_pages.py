@@ -47,7 +47,7 @@ FACTS_JS = r"""
     h1: [...document.querySelectorAll('h1')].filter(vis).map(h => h.innerText.trim().slice(0, 120)),
     price_text: priceEl ? priceEl.innerText.trim().slice(0, 60) : null,
     buy_buttons: buttons.slice(0, 5),
-    buy_button_above_fold: buttons.length ? buttons[0].top < vh : null,
+    buy_button_above_fold: buttons.length ? Math.min(...buttons.map(b => b.top)) < vh : null,
     images_visible: [...document.images].filter(vis).length,
     form_fields_visible: [...document.querySelectorAll('input:not([type=hidden]), select, textarea')].filter(vis).length,
     page_height_px: document.documentElement.scrollHeight,
@@ -104,6 +104,12 @@ def main(argv=None):
                 try:
                     page.goto(url, wait_until="load", timeout=args.timeout)
                     page.wait_for_timeout(1500)
+                    # scroll through the page so lazy-loaded images render, then return to the top
+                    page.evaluate("""async () => {
+                      for (let i = 0, y = 0; i < 40 && y < document.documentElement.scrollHeight; i++, y += window.innerHeight) {
+                        window.scrollTo(0, y); await new Promise(r => setTimeout(r, 150)); }
+                      window.scrollTo(0, 0); }""")
+                    page.wait_for_timeout(500)
                     page.screenshot(path=base + "--fold.png")
                     page.screenshot(path=base + "--full.png", full_page=True)
                     facts = page.evaluate(FACTS_JS)

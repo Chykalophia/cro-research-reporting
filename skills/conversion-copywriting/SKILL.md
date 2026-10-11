@@ -24,7 +24,7 @@ Write copy that earns the next scroll, the next click, the sale. Clarity over cl
 5. **Voice: confident, warm, non-hype.** No corporate-speak, no exclamation-point inflation. (Chykalophia voice rules, including no em dashes, in `references/voice-and-headlines.md`.)
 
 ## What the evidence says about AI and copy
-- AI-written copy and creative can match or beat human work in live tests: fully AI-generated display ads lifted CTR up to 19% over expert ads, while AI edits to human ads did not help (Lee, Ghose, Todri & Adamopoulos, NYU Stern 2025). Across 500M+ Taboola impressions AI and human ads performed comparably.
+- AI-written copy and creative can match or beat human work in live tests: fully AI-generated display ads lifted CTR up to 19% over expert ads, while AI edits to human ads did not help (Lee, Ghose, Todri & Adamopoulos, NYU Stern 2025).
 - Telling people an ad is AI-generated cut CTR by 31.5% (same NYU study). Don't add "AI-written" framing to the copy itself; follow any platform or legal disclosure rules that apply.
 - No one, human or model, reliably predicts the winner: GPT-4 picked the winning Upworthy headline 38–40% of the time vs 33% by chance (Ye et al., Marketing Science 2025). Frameworks and the 4 U's are a quality floor, not a predictor.
 - So the default output is a **variant set for testing**, written from customers' own words.

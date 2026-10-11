@@ -1,6 +1,6 @@
 # Base Rates: How Often Tests Win, and by How Much
 
-Use these to set expectations with clients and to sanity-check "impact" claims in audits. Re-verify yearly. Tier labels follow `deep-research-synthesis/references/source-tiering.md`.
+Use these to set expectations with clients and to sanity-check "impact" claims in audits. Re-verify yearly. Tier labels follow `deep-research-synthesis/references/source-tiering.md`: quote Tier 1 figures as stated, and use Tier 2 figures for direction and rough size only (marked "directional" below).
 
 ## Win rates
 | Context | Share of experiments that win | Source |
@@ -9,13 +9,13 @@ Use these to set expectations with clients and to sanity-check "impact" claims i
 | Bing, Google (overall) | 10–20% | same |
 | Booking.com, Google Ads, Netflix | ~10% (a later, narrower estimate for Google Ads than the HBR range above) | Kohavi, Deng & Vermeer, "A/B Testing Intuition Busters", KDD 2022 [Tier 1] https://exp-platform.com/abtestingintuitionbusters/ |
 | Airbnb Search | ~8% | same |
-| Optimizely customers (127k+ experiments) | 12% win on primary metric; healthy programs 35–40% conclusive | Optimizely [Tier 2, vendor] https://www.optimizely.com/insights/top-10-takeaways-from-the-experimentation-playbook/ |
-| Analytics-Toolkit users (1,001 tests) | 33.5% significant positive | Georgiev 2022 [Tier 2] https://blog.analytics-toolkit.com/2022/what-can-be-learned-from-1001-a-b-tests/ |
+| Optimizely customers (127k+ experiments) | ~12% win on primary metric; healthy programs roughly 35–40% conclusive (directional) | Optimizely [Tier 2, vendor] https://www.optimizely.com/insights/top-10-takeaways-from-the-experimentation-playbook/ |
+| Analytics-Toolkit users (1,001 tests) | about a third significant positive (directional) | Georgiev 2022 [Tier 2] https://blog.analytics-toolkit.com/2022/what-can-be-learned-from-1001-a-b-tests/ |
 
 ## Effect sizes
-- Median lift across 1,001 tests: **0.08%** (mean 2.08%). Significant winners: median 7.5%. Median MDE at 90% power: 6%. Median run: 30 days, ~60k users. (Georgiev 2022.)
+- Median lift across 1,001 tests: **close to zero (~0.1%)**, mean ~2%. Significant winners: median ~7–8%. Median MDE at 90% power ~6%; median run ~30 days, ~60k users. (Georgiev 2022, directional.)
 - Qubit, 6,700 ecommerce experiments: **90% of effects under 1.2%** of revenue. Best categories by revenue per visitor: scarcity +2.9%, social proof +2.3%, urgency +1.5%, abandonment recovery +1.1%. Cosmetic: colour 0.0%, buttons −0.2%, CTA text −0.3% (24% chance positive). (Browne & Swarbrick Jones 2017 [Tier 1-] https://www.gwern.net/doc/economics/advertising/2017-browne.pdf)
-- GoodUI's 115 public tests: ~70% underpowered; removing tests with imbalance or suspected peeking cut the average lift from 12.3% to 3.8%. (Georgiev 2018 [Tier 2] https://blog.analytics-toolkit.com/?p=937)
+- GoodUI's 115 public tests: most (~70%) underpowered; removing tests with imbalance or suspected peeking cut the average lift roughly threefold, from ~12% to ~4%. (Georgiev 2018 [Tier 2, directional] https://blog.analytics-toolkit.com/?p=937)
 - Bing: every 100 ms of speed was worth 0.6% revenue; big positive effects are rare, so be suspicious of them. (Kohavi et al., "Seven Rules of Thumb", KDD 2014 [Tier 1] https://exp-platform.com/rules-of-thumb/)
 
 ## False positives and inflation

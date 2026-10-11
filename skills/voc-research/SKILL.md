@@ -35,7 +35,7 @@ Find out why visitors don't buy by asking and watching real customers, then turn
 1. **Read the brief** (`./cro-engagement.md`): the surface, the funnel step that leaks, the ICP.
 2. **Start with what already exists**: reviews, tickets, return reasons, past surveys. Mining costs nothing and needs no traffic.
 3. **Add the cheapest new signal** for the leaking step: a one-question poll on that page, or a post-purchase survey. Question bank in `references/methods.md`.
-4. **Code with the protocol in `references/ai-coding-protocol.md`**: build a codebook from a first sample, have AI code a 50–100 item sample, have a human code the same sample, run `scripts/agreement.py`, refine until kappa ≥ 0.7, then code the full set. The `voc-coder` agent runs the AI half.
+4. **Code with the protocol in `references/ai-coding-protocol.md`**: build a codebook from a first sample, have AI code a 50–100 item sample, have a human code the same sample, run `scripts/agreement.py`, refine until kappa ≥ 0.7, then code the full set. With under ~100 items in total, have a human review every AI code instead and call the themes exploratory. The `voc-coder` agent runs the AI half.
 5. **Quantify and rank themes**: share of responses per code, split by segment (new vs returning, device, product line). Keep 2–3 verbatim quotes per theme.
 6. **Turn themes into hypotheses**: each one names the theme, its share, the page element it maps to, and the lever (Cost, Trust, Usability, Comprehension, Motivation). Hand them to `ecommerce-cro-audit` for prioritisation and `experiment-design` for testing.
 7. **Build the language bank** (`references/codebook-template.md` has the format) for `conversion-copywriting`.

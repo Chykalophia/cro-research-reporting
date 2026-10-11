@@ -25,7 +25,7 @@ import sys
 import urllib.error
 import urllib.request
 
-URL_RE = re.compile(r"""https?://[^\s"'<>)\]]+""")
+URL_RE = re.compile(r"""https?://[^\s"'<>\]]+""")
 UA = "Mozilla/5.0 (citation-check; +https://github.com/Chykalophia/cro-research-reporting)"
 
 
@@ -33,6 +33,9 @@ def extract_urls(text):
     urls = []
     for u in URL_RE.findall(text):
         u = htmlmod.unescape(u).rstrip(".,;:")
+        # keep balanced parentheses (Wikipedia-style paths), drop the ones closing a Markdown link
+        while u.endswith(")") and u.count(")") > u.count("("):
+            u = u[:-1].rstrip(".,;:")
         if u not in urls and "fonts.googleapis" not in u and "fonts.gstatic" not in u:
             urls.append(u)
     return urls
@@ -140,7 +143,9 @@ def main(argv=None):
         print("\nBlocked pages and 'not found' numbers need a human or WebFetch look: the figure may sit "
               "in a PDF, a table image or behind a paywall. Never keep a figure you could not confirm "
               "without labelling it unverified.")
-    sys.exit(1 if [l for l in links if l["result"] == "dead"] or [c for c in claim_rows if c["found"] is False] else 0)
+    failed = ([l for l in links if l["result"] == "dead"] or [c for c in claim_rows if c["found"] is False]
+              or (foot and any(foot.values())))
+    sys.exit(1 if failed else 0)
 
 
 if __name__ == "__main__":

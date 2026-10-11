@@ -9,7 +9,7 @@ One page per test. Generate the numbers with `python3 ${CLAUDE_PLUGIN_ROOT}/skil
 4. **Primary metric** — control vs variant, relative lift, interval, p-value or the tool's sequential statistic. Show the interval as a label | track | value row (render rule 1), never as text inside a bar.
 5. **Guardrails** — each with its margin and non-inferior / not shown safe.
 6. **Reading the result** —
-   - Winner's curse: "Significant results from tests at this power overstate the true effect about Nx on average (readout.py); plan on a smaller lift after launch."
+   - Winner's curse: "If the true effect equals the planned MDE, significant results at this power overstate it about Nx on average (readout.py); plan on a smaller lift after launch."
    - Twyman's law: if the lift is above ~10%, list what was checked before trusting it.
    - Segments: only pre-registered ones; label any other cut as exploratory.
 7. **Decision and next step** — ship / iterate / abandon the lever, and the follow-up hypothesis.

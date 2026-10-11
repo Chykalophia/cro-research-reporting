@@ -15,6 +15,9 @@ Continuous metric (n, mean, sd), e.g. revenue per visitor:
 Guardrail (name,ctrl_n,ctrl_conv,var_n,var_conv,margin[,lower]); "lower" means
 lower is better (e.g. return rate). margin 0.02 = may not be worse by >2% relative:
   --guardrail "refund_rate,1205,61,1302,70,0.10,lower"
+Continuous guardrail (e.g. revenue per visitor): name,mean,ctrl_n,ctrl_mean,ctrl_sd,
+var_n,var_mean,var_sd,margin[,lower]:
+  --guardrail "rpv,mean,48210,2.41,19.8,48530,2.30,19.1,0.03"
 With several variants, each guardrail names the variant it measures (name@N,
 N counting from 1), since its counts belong to one control/variant comparison:
   --guardrail "refund_rate@2,1205,61,1250,66,0.10,lower"
@@ -61,22 +64,36 @@ def compare_mean(n1, m1, s1, n2, m2, s2, alpha):
 
 def guardrail_check(spec, alpha):
     parts = [s.strip() for s in spec.split(",")]
-    if len(parts) not in (6, 7):
+    is_mean = len(parts) > 1 and parts[1].lower() == "mean"
+    base = 9 if is_mean else 6
+    if len(parts) not in (base, base + 1):
         raise ValueError(f"bad guardrail spec: {spec}")
-    name, n1, x1, n2, x2, margin = parts[0], int(parts[1]), int(parts[2]), int(parts[3]), int(parts[4]), float(parts[5])
-    if len(parts) == 7 and parts[6].lower() != "lower":
-        raise ValueError(f"bad guardrail direction '{parts[6]}' (only 'lower' is allowed): {spec}")
-    if n1 <= 0 or n2 <= 0 or not 0 <= x1 <= n1 or not 0 <= x2 <= n2 or margin <= 0:
-        raise ValueError(f"guardrail needs visitors > 0, conversions between 0 and visitors, margin > 0: {spec}")
+    if len(parts) == base + 1 and parts[-1].lower() != "lower":
+        raise ValueError(f"bad guardrail direction '{parts[-1]}' (only 'lower' is allowed): {spec}")
+    try:
+        if is_mean:
+            n1, m1, s1, n2, m2, s2 = int(parts[2]), float(parts[3]), float(parts[4]), \
+                int(parts[5]), float(parts[6]), float(parts[7])
+            margin = float(parts[8])
+            if n1 <= 0 or n2 <= 0 or m1 == 0 or s1 < 0 or s2 < 0 or margin <= 0:
+                raise ValueError
+        else:
+            n1, x1, n2, x2, margin = int(parts[1]), int(parts[2]), int(parts[3]), int(parts[4]), float(parts[5])
+            if n1 <= 0 or n2 <= 0 or not 0 <= x1 <= n1 or not 0 <= x2 <= n2 or margin <= 0:
+                raise ValueError
+    except ValueError:
+        raise ValueError(f"bad guardrail numbers (visitors > 0, conversions within 0..visitors or a "
+                         f"non-zero control mean, sd >= 0, margin > 0): {spec}") from None
+    name = parts[0]
     variant = 1
     if "@" in name:
         name, _, idx = name.rpartition("@")
         if not idx.isdigit() or int(idx) < 1:
             raise ValueError(f"bad guardrail variant '@{idx}': {spec}")
         variant = int(idx)
-    lower_better = len(parts) == 7
+    lower_better = len(parts) == base + 1
     # one-sided non-inferiority at alpha: use a (1 - 2*alpha) two-sided interval bound
-    r = compare_prop(n1, x1, n2, x2, 2 * alpha)
+    r = compare_mean(n1, m1, s1, n2, m2, s2, 2 * alpha) if is_mean else compare_prop(n1, x1, n2, x2, 2 * alpha)
     lo, hi = r["rel_ci"]
     ok = (hi < margin) if lower_better else (lo > -margin)
     return {"name": name, "variant": variant, "rel_lift": r["rel_lift"], "rel_ci": r["rel_ci"], "margin": margin,

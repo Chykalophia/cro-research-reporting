@@ -10,9 +10,9 @@ Because we saw **<evidence, with source and number>**, we believe **<change>** f
 
 ## Design
 - Page / template / segment:
-- Arms and split: control vs <variants> at <split>
+- Arms and split: control vs <variants> at <split> (`power.py` assumes equal arms; an unequal split needs more total traffic, so size the smallest arm accordingly)
 - Primary metric (one):
-- Guardrails and non-inferiority margins:
+- Guardrails and non-inferiority margins (conversion counts or mean/sd per arm, the two kinds `readout.py --guardrail` accepts):
 - Quality checks: SRM (p < 0.001 fails), pre-exposure balance, A/A status of the tool
 - Baseline and daily eligible visitors:
 - MDE, alpha, power (from `power.py`, paste the output):

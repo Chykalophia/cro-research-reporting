@@ -90,8 +90,13 @@ def main(argv=None):
 
     if (args.baseline is None) == (args.mean is None):
         ap.error("give exactly one of --baseline (conversion) or --mean/--sd (continuous)")
-    if args.mean is not None and args.sd is None:
-        ap.error("--mean needs --sd")
+    if args.baseline is not None and not 0 < args.baseline < 1:
+        ap.error("--baseline must be a rate between 0 and 1, e.g. 0.025")
+    if args.mean is not None:
+        if args.sd is None:
+            ap.error("--mean needs --sd")
+        if args.mean <= 0 or args.sd <= 0:
+            ap.error("--mean and --sd must be positive (the MDE is relative to the mean)")
     if args.variants < 1:
         ap.error("--variants must be at least 1")
     if not 0 < args.alpha < 1 or not 0 < args.power < 1:
@@ -112,7 +117,10 @@ def main(argv=None):
     if args.mode == "size":
         if args.mde is None:
             ap.error("size mode needs --mde")
-        n = nfun(args.mde)
+        try:
+            n = nfun(args.mde)
+        except ValueError as e:
+            ap.error(str(e))
         out.update(mde_relative=args.mde, n_per_arm=n, n_total=n * arms)
         if args.daily_visitors:
             days = n * arms / args.daily_visitors

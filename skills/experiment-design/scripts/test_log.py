@@ -20,6 +20,7 @@ Outcome is one of: win, loss, flat, invalid (e.g. SRM).
 import argparse
 import csv
 import os
+import statistics
 import sys
 from collections import defaultdict
 from datetime import date
@@ -31,9 +32,12 @@ VALID_OUTCOMES = OUTCOMES - {"invalid"}
 
 
 def usable(row):
-    """A row counts toward win rates only with a known outcome and a numeric (or blank) lift.
-    Hand-edited logs can break either; such rows are treated like invalid tests."""
-    if (row.get("outcome") or "").strip() not in VALID_OUTCOMES:
+    """A row counts toward win rates only with a known outcome, no failed SRM check and a
+    numeric (or blank) lift. Hand-edited logs can break these; such rows are treated like
+    invalid tests."""
+    if outcome(row) not in VALID_OUTCOMES:
+        return False
+    if (row.get("srm_pass") or "").strip().lower() in ("false", "no", "fail", "0"):
         return False
     if row.get("rel_lift"):
         try:
@@ -41,6 +45,10 @@ def usable(row):
         except ValueError:
             return False
     return True
+
+
+def outcome(row):
+    return (row.get("outcome") or "").strip().lower()
 
 
 def read(path):
@@ -80,7 +88,7 @@ def rates(rows, key):
             continue
         k = r.get(key) or "(none)"
         g[k]["n"] += 1
-        g[k][r["outcome"].strip()] += 1
+        g[k][outcome(r)] += 1
     return g
 
 
@@ -95,15 +103,15 @@ def cmd_summary(a):
     if not rows:
         sys.exit(f"No tests in {a.log}")
     valid = [r for r in rows if usable(r)]
-    wins = sum(r["outcome"] == "win" for r in valid)
+    wins = sum(outcome(r) == "win" for r in valid)
     print(f"## Test log summary ({a.log})")
     print(f"- {len(rows)} tests logged, {len(rows) - len(valid)} invalid or unreadable (SRM, broken, malformed row)")
     if valid:
         print(f"- Win rate {wins}/{len(valid)} = {wins / len(valid):.0%} "
               f"(industry reference: roughly 10-33%)")
-    lifts = sorted(float(r["rel_lift"]) for r in valid if r["outcome"] == "win" and r["rel_lift"])
+    lifts = [float(r["rel_lift"]) for r in valid if outcome(r) == "win" and r["rel_lift"]]
     if lifts:
-        print(f"- Median winning lift {lifts[len(lifts) // 2]:.1%} (expect post-launch lift to be smaller)")
+        print(f"- Median winning lift {statistics.median(lifts):.1%} (expect post-launch lift to be smaller)")
     for key in ("lever", "page"):
         print(f"\n### By {key}")
         print(f"| {key} | tests | wins | losses | flat | shrunk win-rate prior |")

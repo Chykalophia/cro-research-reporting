@@ -5,9 +5,10 @@
 |---|---|---|---|---|---|---|---|
 | cost_shipping | Shipping cost surprise | Cost | Mentions shipping, tax or duty cost as a reason to hesitate | Cost appears late or is higher than expected | General "too expensive" (use cost_price) | "Shipping doubled the price" | "Didn't know about duties until checkout" |
 | fit_uncertainty | Unsure about size/fit | Usability | Doubt about which size or whether it fits | Asks about sizing, compares to other brands | Complaints after receiving (use fit_actual) | "Do these run small?" | "I'm between sizes" |
-| none | No codable reason | — | Blank, "nothing", or off-topic | — | — | "nope" | "n/a" |
+| none | Explicitly no reason | — | The customer says nothing held them back | "Nothing", "no concerns" | Blank or off-topic answers (use skip) | "nope, all good" | "nothing really" |
+| skip | Not codable | — | Blank, unreadable or off-topic | — | — | "" | "do you ship to Canada" |
 
-Levers: Cost, Trust, Usability, Comprehension, Motivation (Conversion.com framework) so themes line up with the test log.
+Levers: Cost, Trust, Usability, Comprehension, Motivation (Conversion.com framework) so themes line up with the test log. Leave `skip` items out of theme shares (report how many there were); `none` stays in the denominator.
 
 ## Theme summary (for the report)
 | theme (code) | share of responses | n | sources | segment differences | page element | hypothesis |

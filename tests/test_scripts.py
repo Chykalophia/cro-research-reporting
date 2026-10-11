@@ -116,6 +116,52 @@ class ReviewRoundTwoTests(unittest.TestCase):
         self.assertEqual(check_citations.footnote_integrity(text)["numbering_gaps"], [2])
 
 
+class ReviewRoundThreeTests(unittest.TestCase):
+    def test_power_rejects_bad_metric_inputs(self):
+        self.assertTrue(rejects(power.main, ["size", "--baseline", "1.5", "--mde", "0.1"]))
+        self.assertTrue(rejects(power.main, ["size", "--baseline", "0.9", "--mde", "0.2"]))
+        self.assertTrue(rejects(power.main, ["size", "--mean", "0", "--sd", "5", "--mde", "0.1"]))
+
+    def test_srm_rejects_nan_and_bad_threshold(self):
+        with self.assertRaises(ValueError):
+            srm_check.srm([100, 100], [float("nan"), 1])
+        with self.assertRaises(ValueError):
+            srm_check.srm([100, 100], threshold=-1)
+
+    def test_test_log_srm_fail_and_padding(self):
+        with tempfile.TemporaryDirectory() as d:
+            log = os.path.join(d, "log.csv")
+            quiet(test_log.main, ["--log", log, "init"])
+            with open(log, "a") as f:
+                f.write("T1,,pdp,Trust,h,,, win ,0.02,,,,\nT2,,pdp,Trust,h,,,win,0.04,,,false,\n"
+                        "T3,,pdp,Trust,h,,,win,0.06,,,,\n")
+            g = test_log.rates(test_log.read(log), "lever")["Trust"]
+            self.assertEqual((g["n"], g["win"]), (2, 2))
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                test_log.main(["--log", log, "summary"])
+            self.assertIn("Win rate 2/2", out.getvalue())
+            self.assertIn("Median winning lift 4.0%", out.getvalue())
+
+    def test_urls_keep_balanced_parentheses(self):
+        text = "[a](https://x.io/a_(b)) and https://en.wikipedia.org/wiki/Clarke_(river)."
+        self.assertEqual(check_citations.extract_urls(text),
+                         ["https://x.io/a_(b)", "https://en.wikipedia.org/wiki/Clarke_(river)"])
+
+    def test_footnote_problems_fail_the_run(self):
+        with tempfile.TemporaryDirectory() as d:
+            rep = os.path.join(d, "r.html")
+            with open(rep, "w") as f:
+                f.write('<p><a href="#s-1">1</a></p>')
+            self.assertTrue(rejects(check_citations.main, [rep]))
+
+    def test_mean_guardrail(self):
+        out = quiet(readout.main, ["--type", "mean", "--control", "48210", "2.41", "19.8",
+                                   "--variant", "48530", "2.55", "20.4",
+                                   "--guardrail", "rpv,mean,48210,2.41,19.8,48530,2.30,19.1,0.03", "--json"])
+        self.assertEqual(out["variants"][0]["decision"], "DO NOT SHIP (guardrail)")
+
+
 class StatsTests(unittest.TestCase):
     def test_chi2_matches_tables(self):
         self.assertAlmostEqual(_stats.chi2_sf(3.841, 1), 0.05, places=3)

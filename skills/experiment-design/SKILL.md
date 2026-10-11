@@ -18,7 +18,7 @@ Plan tests that can actually detect something, read them out honestly, and keep 
 
 ## What the evidence says (set expectations with this)
 - **Most ideas fail.** Roughly 1 in 3 experiments wins at Microsoft, 10–20% at Bing, Google, Netflix and Booking.com, 8% at Airbnb Search; 12% in Optimizely's 127k-experiment dataset. Details and sources in `references/base-rates.md`.
-- **Real effects are small.** Median lift across 1,001 tests was 0.08%; 90% of Qubit's 6,700 ecommerce tests moved revenue by less than 1.2%.
+- **Real effects are small.** Median lift across 1,001 tests was close to zero (directional, Georgiev 2022); 90% of Qubit's 6,700 ecommerce tests moved revenue by less than 1.2%.
 - **Many "wins" are false or inflated.** At typical success rates a quarter or more of significant results are false positives, and underpowered winners overstate their effect.
 - **Tests break.** About 6% of Microsoft tests have a sample ratio mismatch (SRM), which invalidates them.
 

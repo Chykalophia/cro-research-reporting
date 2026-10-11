@@ -43,7 +43,7 @@ Run `references/qa-checklist.md` (tag balance, `node --check` on any JS, a rende
 - `references/citations-and-grounding.md` — citation spec, outline-first generation, question-type templates, tone presets, and the grounding/self-verification gate.
 - `references/qa-checklist.md` — pre-delivery verification steps and commands.
 - `references/experiment-readout.md` — the one-page A/B test readout (numbers from `experiment-design/scripts/readout.py`).
-- `scripts/check_citations.py` — checks every cited URL resolves, load-bearing numbers appear on their source page, and footnotes are gapless.
+- `scripts/check_citations.py` — checks every cited URL resolves and HTML footnotes are gapless; checks load-bearing numbers against their source page when given a `--claims` CSV (`url,expect`).
 
 ## Engagement context
 At the start of a task, check for the engagement brief (default `./cro-engagement.md`, created by the `getting-started` skill / `/kickoff`). If it exists, read it first and match the deliverable's audience (internal vs client-facing) and the brand voice/tokens it records. If it's missing and the work is more than a one-off, offer to capture one via `getting-started`.

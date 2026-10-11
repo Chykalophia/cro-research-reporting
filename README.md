@@ -79,10 +79,10 @@ No configuration required. More powerful when connected (all optional):
 - **Direct:** save the `.plugin` file via the install button, or place the folder in your plugins directory.
 
 ## Testing & iteration
-- `python3 -m unittest discover -s tests -v` tests every script (standard library only; CI runs it on each PR).
+- `python3 -m unittest discover -s tests -v` tests the statistics, logging, agreement and citation scripts (standard library only; CI runs it on each PR). `capture_pages.py` needs a browser, so check it by hand against `evals/audit-fixture/`.
 - `evals/triggers.json` holds should-trigger and near-miss prompts per skill; run them across Haiku/Sonnet/Opus and refine descriptions until triggering is reliable.
 - `evals/audit-fixture/` is a seeded, flawed PDP with an answer key; re-score it after changing the audit to track precision.
-- `capture_pages.py` needs Playwright for Python (`python3 -m pip install playwright`); the other scripts need nothing beyond Python 3.8+.
+- `capture_pages.py` needs Playwright for Python (`python3 -m pip install playwright && python3 -m playwright install chromium`); the other scripts need nothing beyond Python 3.8+.
 
 ## Design notes & credits
 - **Evidence over assertion:** every recommendation names its evidence sources and confidence; vendor lift figures stay directional and out of client promises.

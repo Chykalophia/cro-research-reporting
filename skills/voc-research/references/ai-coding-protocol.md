@@ -9,7 +9,7 @@ The evidence-backed way to let an LLM code qualitative data without fooling your
 
 ## Steps
 1. **Draft the codebook from data.** Have the model read a random 50–100 items and propose 8–15 codes. A human merges, renames and writes a one-line definition, an include rule, an exclude rule and two real examples per code. Use `codebook-template.md`.
-2. **Code a validation sample.** Draw a fresh random 50–100 items. AI codes them with the codebook in the prompt (one item per line, return code ids only, allow multiple codes with `;`, and an explicit `none` code). A human codes the same items blind.
+2. **Code a validation sample.** Draw a fresh random 50–100 items. AI codes them with the codebook in the prompt (one item per line, return code ids only, allow multiple codes with `;`, an explicit `none` code for "no reason", and `skip` for blank or off-topic items). A human codes the same items blind.
 3. **Measure agreement.** `python3 ${CLAUDE_PLUGIN_ROOT}/skills/voc-research/scripts/agreement.py sample.csv --a human --b ai` (with `;`-separated multi-codes it pools every item x code decision into the overall figure). Target kappa ≥ 0.7 overall and per code.
 4. **Fix weak codes.** Tighten definitions, add counter-examples, merge codes humans also confuse. Re-run on a new sample (not the same one, or you overfit).
 5. **Code the full set** in batches. Spot-check 20 random items per batch. Keep the model and prompt fixed across batches; if either changes, re-validate.
@@ -20,7 +20,8 @@ The evidence-backed way to let an LLM code qualitative data without fooling your
 You are coding customer feedback for a CRO study. Use ONLY these codes:
 <code id>: <definition>. Include: <rule>. Exclude: <rule>. Examples: "<ex1>", "<ex2>"
 ...
-none: no codable reason given.
+none: the customer says nothing held them back.
+skip: blank, unreadable or off-topic.
 For each line below return: <item id>,<code ids separated by ;>
 Do not invent codes. If unsure between two codes, return both.
 <items>
