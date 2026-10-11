@@ -184,6 +184,9 @@ class ReviewRoundFourTests(unittest.TestCase):
         base = ["--control", "50000", "1000", "--variant", "50000", "1200", "--guardrail"]
         self.assertTrue(rejects(readout.main, base + ["refunds,50000,0,50000,3,0.1,lower"]))
         self.assertTrue(rejects(readout.main, base + ["delta,mean,100,-5,1,100,-4.5,1,0.03"]))
+        self.assertTrue(rejects(readout.main, ["--control", "50000", "0", "--variant", "50000", "40"]))
+        self.assertTrue(rejects(readout.main, ["--type", "mean", "--control", "100", "0", "1",
+                                               "--variant", "100", "1", "1"]))
 
     def test_constant_codes_are_unscorable_not_weak(self):
         with tempfile.TemporaryDirectory() as d:

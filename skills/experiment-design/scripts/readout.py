@@ -119,8 +119,11 @@ def main(argv=None):
     for arm in [args.control] + args.variant:
         if len(arm) != want:
             ap.error(f"--type {args.type} needs {want} numbers per arm")
-        if arm[0] <= 0 or (args.type == "prop" and not 0 <= arm[1] <= arm[0]):
-            ap.error("each arm needs visitors > 0 and conversions between 0 and visitors")
+        if arm[0] <= 0 or (args.type == "prop" and not 0 < arm[1] <= arm[0]):
+            ap.error("each arm needs visitors > 0 and conversions between 1 and visitors "
+                     "(the relative interval is undefined with zero events)")
+    if args.type == "mean" and args.control[1] <= 0:
+        ap.error("the control mean must be positive (relative lift is measured against it)")
     if args.weights and any(w <= 0 for w in args.weights):
         ap.error("--weights must all be positive")
     k = len(args.variant)
