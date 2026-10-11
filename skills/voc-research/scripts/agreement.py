@@ -40,8 +40,12 @@ def main(argv=None):
     args = ap.parse_args(argv)
     with open(args.csv, newline="") as f:
         rows = list(csv.DictReader(f))
-    a = [r[args.a].strip() for r in rows]
-    b = [r[args.b].strip() for r in rows]
+    if not rows or args.a not in rows[0] or args.b not in rows[0]:
+        ap.error(f"CSV needs at least one row and columns '{args.a}' and '{args.b}'")
+    a = [(r[args.a] or "").strip() for r in rows]
+    b = [(r[args.b] or "").strip() for r in rows]
+    if any(not x for x in a + b):
+        ap.error("empty coding cells found; code every item, using an explicit 'none' code where needed")
     multi = any(args.sep in x for x in a + b)
     print(f"## Coding agreement ({len(rows)} items, {args.a} vs {args.b})")
     weak = []

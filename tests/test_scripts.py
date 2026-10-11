@@ -26,6 +26,61 @@ def quiet(fn, *a, **k):
         return fn(*a, **k)
 
 
+def rejects(fn, argv):
+    """True if the CLI exits with an argparse error instead of a traceback."""
+    with contextlib.redirect_stderr(io.StringIO()), contextlib.redirect_stdout(io.StringIO()):
+        try:
+            fn(argv)
+        except SystemExit as e:
+            return e.code != 0
+    return False
+
+
+class InputValidationTests(unittest.TestCase):
+    def test_power_rejects_bad_inputs(self):
+        self.assertTrue(rejects(power.main, ["size", "--baseline", "0.03", "--mde", "0.1", "--variants", "0"]))
+        self.assertTrue(rejects(power.main, ["size", "--baseline", "0.03", "--mde", "0.1", "--power", "1"]))
+        self.assertTrue(rejects(power.main, ["size", "--baseline", "0.03", "--mde", "0.1", "--cuped-r", "1"]))
+
+    def test_readout_rejects_impossible_counts(self):
+        self.assertTrue(rejects(readout.main, ["--control", "0", "0", "--variant", "100", "5"]))
+        self.assertTrue(rejects(readout.main, ["--control", "100", "150", "--variant", "100", "5"]))
+
+    def test_srm_rejects_zero_weight(self):
+        with self.assertRaises(ValueError):
+            srm_check.srm([100, 100], [0, 1])
+        self.assertTrue(rejects(srm_check.main, ["0", "0"]))
+
+    def test_agreement_rejects_blank_and_missing(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "s.csv")
+            with open(p, "w") as f:
+                f.write("id,human,ai\n1,cost,\n")
+            self.assertTrue(rejects(agreement.main, [p]))
+            self.assertTrue(rejects(agreement.main, [p, "--b", "nope"]))
+
+    def test_citations_rejects_bad_claims_and_missing_report(self):
+        with tempfile.TemporaryDirectory() as d:
+            rep = os.path.join(d, "r.md")
+            with open(rep, "w") as f:
+                f.write("no links here")
+            claims = os.path.join(d, "c.csv")
+            with open(claims, "w") as f:
+                f.write("url,expect\nhttps://example.org/,\n")
+            self.assertTrue(rejects(check_citations.main, [rep, "--claims", claims]))
+            self.assertTrue(rejects(check_citations.main, [os.path.join(d, "missing.html")]))
+
+    def test_test_log_skips_malformed_rows(self):
+        with tempfile.TemporaryDirectory() as d:
+            log = os.path.join(d, "log.csv")
+            quiet(test_log.main, ["--log", log, "init"])
+            with open(log, "a") as f:
+                f.write("T1,,pdp,Trust,h,,,win,0.05,,,,\nT2,,pdp,Trust,h,,,maybe,,,,,\nT3,,pdp,Trust,h,,,win,abc,,,,\n")
+            g = test_log.rates(test_log.read(log), "lever")["Trust"]
+            self.assertEqual((g["n"], g["win"]), (1, 1))
+            quiet(test_log.main, ["--log", log, "summary"])
+
+
 class StatsTests(unittest.TestCase):
     def test_chi2_matches_tables(self):
         self.assertAlmostEqual(_stats.chi2_sf(3.841, 1), 0.05, places=3)

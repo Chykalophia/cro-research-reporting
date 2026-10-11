@@ -92,6 +92,16 @@ def main(argv=None):
         ap.error("give exactly one of --baseline (conversion) or --mean/--sd (continuous)")
     if args.mean is not None and args.sd is None:
         ap.error("--mean needs --sd")
+    if args.variants < 1:
+        ap.error("--variants must be at least 1")
+    if not 0 < args.alpha < 1 or not 0 < args.power < 1:
+        ap.error("--alpha and --power must be between 0 and 1")
+    if not 0 <= args.cuped_r < 1:
+        ap.error("--cuped-r must be in [0, 1)")
+    if args.mde is not None and args.mde <= 0:
+        ap.error("--mde must be positive")
+    if args.daily_visitors is not None and args.daily_visitors <= 0:
+        ap.error("--daily-visitors must be positive")
     args.alpha_adj = args.alpha / args.variants
     var_mult = 1 - args.cuped_r ** 2
     arms = args.variants + 1

@@ -125,6 +125,9 @@ def main(argv=None):
             print(f"- {vp}: buy button above fold: {fx['buy_button_above_fold']} | price: {fx['price_text']} | "
                   f"images: {fx['images_visible']} | fields: {fx['form_fields_visible']} | "
                   f"LCP: {fx['lcp_ms']} ms | horizontal scroll: {fx['has_horizontal_scroll']}")
+    ok = sum(1 for vps in results.values() for fx in vps.values() if "error" not in fx)
+    if ok == 0:
+        sys.exit("All captures failed. Ask the user for desktop and mobile screenshots; do not score from HTML.")
     print(f"\nScreenshots and {path} written. Read the screenshots before scoring the checklist.")
 
 

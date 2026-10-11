@@ -6,8 +6,8 @@ Use these to set expectations with clients and to sanity-check "impact" claims i
 | Context | Share of experiments that win | Source |
 |---|---|---|
 | Microsoft (all) | ~33% positive, ~33% flat, ~33% negative | Kohavi & Thomke, HBR 2017 [Tier 1] https://web-docs.stern.nyu.edu/executive/The%20Surprising%20Power%20of%20Online%20Experiments.pdf |
-| Bing, Google Ads | 10–20% | same |
-| Booking.com, Google Ads, Netflix | ~10% | Kohavi, Deng & Vermeer, "A/B Testing Intuition Busters", KDD 2022 [Tier 1] https://exp-platform.com/abtestingintuitionbusters/ |
+| Bing, Google (overall) | 10–20% | same |
+| Booking.com, Google Ads, Netflix | ~10% (a later, narrower estimate for Google Ads than the HBR range above) | Kohavi, Deng & Vermeer, "A/B Testing Intuition Busters", KDD 2022 [Tier 1] https://exp-platform.com/abtestingintuitionbusters/ |
 | Airbnb Search | ~8% | same |
 | Optimizely customers (127k+ experiments) | 12% win on primary metric; healthy programs 35–40% conclusive | Optimizely [Tier 2, vendor] https://www.optimizely.com/insights/top-10-takeaways-from-the-experimentation-playbook/ |
 | Analytics-Toolkit users (1,001 tests) | 33.5% significant positive | Georgiev 2022 [Tier 2] https://blog.analytics-toolkit.com/2022/what-can-be-learned-from-1001-a-b-tests/ |

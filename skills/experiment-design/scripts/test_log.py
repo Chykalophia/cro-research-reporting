@@ -27,6 +27,20 @@ from datetime import date
 FIELDS = ["id", "date_end", "page", "lever", "hypothesis", "evidence", "primary", "outcome",
           "rel_lift", "ci_low", "ci_high", "srm_pass", "notes"]
 OUTCOMES = {"win", "loss", "flat", "invalid"}
+VALID_OUTCOMES = OUTCOMES - {"invalid"}
+
+
+def usable(row):
+    """A row counts toward win rates only with a known outcome and a numeric (or blank) lift.
+    Hand-edited logs can break either; such rows are treated like invalid tests."""
+    if (row.get("outcome") or "").strip() not in VALID_OUTCOMES:
+        return False
+    if row.get("rel_lift"):
+        try:
+            float(row["rel_lift"])
+        except ValueError:
+            return False
+    return True
 
 
 def read(path):
@@ -62,11 +76,11 @@ def cmd_add(a):
 def rates(rows, key):
     g = defaultdict(lambda: {"n": 0, "win": 0, "loss": 0, "flat": 0})
     for r in rows:
-        if r["outcome"] == "invalid":
+        if not usable(r):
             continue
-        for k in [r.get(key) or "(none)"]:
-            g[k]["n"] += 1
-            g[k][r["outcome"]] += 1
+        k = r.get(key) or "(none)"
+        g[k]["n"] += 1
+        g[k][r["outcome"].strip()] += 1
     return g
 
 
@@ -80,10 +94,10 @@ def cmd_summary(a):
     rows = read(a.log)
     if not rows:
         sys.exit(f"No tests in {a.log}")
-    valid = [r for r in rows if r["outcome"] != "invalid"]
+    valid = [r for r in rows if usable(r)]
     wins = sum(r["outcome"] == "win" for r in valid)
     print(f"## Test log summary ({a.log})")
-    print(f"- {len(rows)} tests logged, {len(rows) - len(valid)} invalid (SRM/broken)")
+    print(f"- {len(rows)} tests logged, {len(rows) - len(valid)} invalid or unreadable (SRM, broken, malformed row)")
     if valid:
         print(f"- Win rate {wins}/{len(valid)} = {wins / len(valid):.0%} "
               f"(industry reference: roughly 10-33%)")
@@ -112,8 +126,10 @@ def main(argv=None):
     s = sub.add_parser("add")
     for f in ("id", "page", "lever", "hypothesis", "outcome"):
         s.add_argument(f"--{f}", required=True)
-    for f in ("evidence", "primary", "date-end", "rel-lift", "ci-low", "ci-high", "srm-pass", "notes"):
+    for f in ("evidence", "primary", "date-end", "srm-pass", "notes"):
         s.add_argument(f"--{f}")
+    for f in ("rel-lift", "ci-low", "ci-high"):
+        s.add_argument(f"--{f}", type=float)
     sub.add_parser("summary")
     p = sub.add_parser("prior")
     p.add_argument("--lever", required=True)

@@ -84,12 +84,24 @@ def main(argv=None):
     ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args(argv)
-    text = open(args.report, encoding="utf-8").read()
+    try:
+        with open(args.report, encoding="utf-8") as f:
+            text = f.read()
+    except OSError as e:
+        ap.error(f"cannot read report: {e}")
     urls = extract_urls(text)
     claims = []
     if args.claims:
-        with open(args.claims, newline="") as f:
-            claims = [r for r in csv.DictReader(f) if r.get("url")]
+        try:
+            with open(args.claims, newline="") as f:
+                rd = csv.DictReader(f)
+                if not rd.fieldnames or not {"url", "expect"} <= set(rd.fieldnames):
+                    ap.error("--claims CSV needs 'url' and 'expect' columns")
+                claims = list(rd)
+        except OSError as e:
+            ap.error(f"cannot read claims file: {e}")
+        if any(not (r.get("url") or "").strip() or not (r.get("expect") or "").strip() for r in claims):
+            ap.error("--claims CSV has a row with a blank url or expect value")
     need_body = {c["url"] for c in claims}
     with cf.ThreadPoolExecutor(args.workers) as ex:
         futs = {u: ex.submit(fetch, u, 20, u in need_body) for u in set(urls) | need_body}

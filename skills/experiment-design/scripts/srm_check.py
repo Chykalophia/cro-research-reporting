@@ -25,6 +25,8 @@ def srm(counts, weights=None, threshold=0.001):
         weights = [1] * len(counts)
     if len(weights) != len(counts):
         raise ValueError("need one weight per arm")
+    if any(w <= 0 for w in weights) or any(c < 0 for c in counts) or sum(counts) <= 0:
+        raise ValueError("weights must be positive and counts non-negative with a positive total")
     total, wsum = sum(counts), float(sum(weights))
     expected = [total * w / wsum for w in weights]
     stat = sum((o - e) ** 2 / e for o, e in zip(counts, expected))
@@ -44,7 +46,10 @@ def main(argv=None):
     args = ap.parse_args(argv)
     if len(args.counts) < 2:
         ap.error("need at least two arms")
-    r = srm(args.counts, args.weights, args.threshold)
+    try:
+        r = srm(args.counts, args.weights, args.threshold)
+    except ValueError as e:
+        ap.error(str(e))
     if args.json:
         print(json.dumps(r, indent=2))
         return r
