@@ -75,15 +75,16 @@ def guardrail_check(spec, alpha):
             n1, m1, s1, n2, m2, s2 = int(parts[2]), float(parts[3]), float(parts[4]), \
                 int(parts[5]), float(parts[6]), float(parts[7])
             margin = float(parts[8])
-            if n1 <= 0 or n2 <= 0 or m1 == 0 or s1 < 0 or s2 < 0 or margin <= 0:
+            if n1 <= 0 or n2 <= 0 or m1 <= 0 or s1 < 0 or s2 < 0 or margin <= 0:
                 raise ValueError
         else:
             n1, x1, n2, x2, margin = int(parts[1]), int(parts[2]), int(parts[3]), int(parts[4]), float(parts[5])
-            if n1 <= 0 or n2 <= 0 or not 0 <= x1 <= n1 or not 0 <= x2 <= n2 or margin <= 0:
+            if n1 <= 0 or n2 <= 0 or not 0 < x1 <= n1 or not 0 < x2 <= n2 or margin <= 0:
                 raise ValueError
     except ValueError:
-        raise ValueError(f"bad guardrail numbers (visitors > 0, conversions within 0..visitors or a "
-                         f"non-zero control mean, sd >= 0, margin > 0): {spec}") from None
+        raise ValueError(f"bad guardrail numbers (visitors > 0, at least one conversion in each arm since the "
+                         f"relative interval is undefined at zero, or a positive control mean, sd >= 0, "
+                         f"margin > 0): {spec}") from None
     name = parts[0]
     variant = 1
     if "@" in name:
@@ -128,7 +129,7 @@ def main(argv=None):
     counts = [int(args.control[0])] + [int(v[0]) for v in args.variant]
     srm_r = srm(counts, args.weights)
     try:
-        guards = [guardrail_check(g, args.alpha) for g in args.guardrail]
+        guards = [guardrail_check(g, alpha) for g in args.guardrail]  # same Bonferroni alpha as the primary
     except ValueError as e:
         ap.error(str(e))
     if k > 1 and any("@" not in g.split(",")[0] for g in args.guardrail):

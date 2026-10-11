@@ -162,6 +162,40 @@ class ReviewRoundThreeTests(unittest.TestCase):
         self.assertEqual(out["variants"][0]["decision"], "DO NOT SHIP (guardrail)")
 
 
+
+class ReviewRoundFourTests(unittest.TestCase):
+    def test_guardrails_use_adjusted_alpha(self):
+        seen = []
+        orig = readout.guardrail_check
+
+        def spy(spec, alpha):
+            seen.append(alpha)
+            return orig(spec, alpha)
+        readout.guardrail_check = spy
+        try:
+            quiet(readout.main, ["--control", "50000", "1000", "--variant", "50000", "1100",
+                                 "--variant", "50000", "1050", "--guardrail", "aov@1,1000,500,1000,500,0.05",
+                                 "--json"])
+        finally:
+            readout.guardrail_check = orig
+        self.assertEqual(seen, [0.025])
+
+    def test_guardrail_rejects_unevaluable_inputs(self):
+        base = ["--control", "50000", "1000", "--variant", "50000", "1200", "--guardrail"]
+        self.assertTrue(rejects(readout.main, base + ["refunds,50000,0,50000,3,0.1,lower"]))
+        self.assertTrue(rejects(readout.main, base + ["delta,mean,100,-5,1,100,-4.5,1,0.03"]))
+
+    def test_constant_codes_are_unscorable_not_weak(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "s.csv")
+            with open(path, "w") as f:
+                f.write("id,human,ai\n1,price,price\n2,price,price\n3,price,price\n")
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                agreement.main([path])
+            self.assertIn("(overall)", out.getvalue().split("Not scorable")[1])
+            self.assertNotIn("Below", out.getvalue())
+
 class StatsTests(unittest.TestCase):
     def test_chi2_matches_tables(self):
         self.assertAlmostEqual(_stats.chi2_sf(3.841, 1), 0.05, places=3)

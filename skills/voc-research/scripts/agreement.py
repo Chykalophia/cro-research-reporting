@@ -57,7 +57,7 @@ def main(argv=None):
     a = [(r[args.a] or "").strip() for r in rows]
     b = [(r[args.b] or "").strip() for r in rows]
     if any(not x for x in a + b):
-        ap.error("empty coding cells found; code every item, using an explicit 'none' code where needed")
+        ap.error("empty coding cells found; code every item, using an explicit 'none' (no reason) or 'skip' (blank or off-topic) code")
     multi = any(args.sep in x for x in a + b)
     sa = [labels_of(x, args.sep) for x in a]
     sb = [labels_of(x, args.sep) for x in b]
@@ -74,7 +74,9 @@ def main(argv=None):
         exact = sum(x == y for x, y in zip(sa, sb)) / len(sa)
         print(f"- Multi-label input ('{args.sep}' found), so overall kappa pools every item x code yes/no "
               f"decision: kappa {show(k)}; items with identical code sets {exact:.0%}")
-    if math.isnan(k) or k < args.min_kappa:
+    if math.isnan(k):
+        unscorable.append("(overall)")
+    elif k < args.min_kappa:
         weak.append("(overall)")
     print("\n| code | human count | AI count | kappa (yes/no) |")
     print("|---|---|---|---|")
