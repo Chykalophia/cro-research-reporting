@@ -16,6 +16,7 @@ HTTPS_PROXY from the environment is honoured unless --no-proxy is given.
   python3 capture_pages.py https://store.example/products/x https://store.example/cart --out audit-captures
 """
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -37,7 +38,7 @@ FACTS_JS = r"""
   const buyRe = /(add to (cart|bag|basket)|buy now|checkout|purchase|pre-?order)/i;
   const buttons = [...document.querySelectorAll('button, input[type=submit], a[role=button], a.button, a.btn')]
     .filter(vis).map(b => ({text: (b.innerText || b.value || '').trim().slice(0, 60),
-                            top: Math.round(b.getBoundingClientRect().top + window.scrollY)}))
+                            top: Math.round(b.getBoundingClientRect().top)}))
     .filter(b => buyRe.test(b.text));
   const priceEl = [...document.querySelectorAll('[class*=price], [itemprop=price], [data-price]')].find(vis);
   const nav = performance.getEntriesByType('navigation')[0] || {};
@@ -100,7 +101,7 @@ def main(argv=None):
                 ctx = browser.new_context(**VIEWPORTS[vp])
                 ctx.add_init_script(LCP_INIT)
                 page = ctx.new_page()
-                base = os.path.join(args.out, f"{slug(url)}--{vp}")
+                base = os.path.join(args.out, f"{slug(url)}-{hashlib.md5(url.encode()).hexdigest()[:6]}--{vp}")
                 try:
                     page.goto(url, wait_until="load", timeout=args.timeout)
                     page.wait_for_timeout(1500)

@@ -68,7 +68,10 @@ def solve_mde(nfun, n_available):
             lo = mid
         else:
             hi = mid
-    return hi
+    try:  # the clamped upper bound may itself be undetectable or outside the valid range
+        return hi if nfun(hi) <= n_available else None
+    except ValueError:
+        return None
 
 
 def main(argv=None):

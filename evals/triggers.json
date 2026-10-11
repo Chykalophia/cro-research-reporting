@@ -13,8 +13,8 @@
     "should_not": ["research the market size for DTC footwear", "audit this landing page"]
   },
   "experiment-design": {
-    "should": ["we get 3,000 visitors a day to the PDP at 2.4% ATC, how long to detect a 10% lift?", "control 48210/1205, variant 48530/1302, did it win?", "our traffic is too low to A/B test, what should we do?"],
-    "should_not": ["which headline is better, A or B?", "turn these test results into a client report"]
+    "should": ["we get 3,000 visitors a day to the PDP at 2.4% ATC, how long to detect a 10% lift?", "control 48210/1205, variant 48530/1302, did it win?", "our traffic is too low to A/B test, what should we do?", "which of these two headlines will win if we test them?"],
+    "should_not": ["rewrite this headline in our brand voice", "turn these test results into a client report"]
   },
   "deep-research-synthesis": {
     "should": ["research best practices for BNPL on high-AOV stores with sources", "fact-check: does free shipping really reduce abandonment 30%?"],

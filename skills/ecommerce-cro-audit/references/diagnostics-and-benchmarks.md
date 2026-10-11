@@ -21,7 +21,7 @@ As of 2024–2026; platform/vendor figures are directional. Re-verify yearly.
 ## Traffic-quality caveat (read before reacting to a CVR)
 A conversion rate is a fraction — a polluted denominator makes it lie. Before concluding "the page is broken," check the traffic shape:
 - **Red flags:** 80%+ "direct", desktop-dominant in a mobile-first category, a device segment converting ~0 over thousands of sessions, near-zero email traffic. These suggest bot/junk/"dark" traffic inflating sessions.
-- **The robust signal:** the **add-to-cart rate** (and absolute count of cart-adds) is far harder to explain away than the headline CVR. If ATC is low on every clean segment (e.g. returning visitors, email traffic) and stable across windows, the page problem is real even if the CVR overstates it.
+- **The robust signal:** the **add-to-cart rate** (and absolute count of cart-adds) is far harder to explain away than the headline CVR. If ATC is low on every clean segment (e.g. returning visitors, email traffic) and stable across windows, treat it as a conversion problem to investigate. It does not by itself prove the page is the cause (product fit, price and availability also suppress cart adds), so corroborate with the checklist, VoC or a test before calling it a page problem.
 - **Action:** recommend analytics hygiene (bot filtering, clean GA4/Shopify segments) as a precondition — you can't trust an A/B test on a polluted denominator.
 
 ## The five-gate lens
@@ -45,7 +45,7 @@ The worst step is where to focus. A healthy ATC→checkout but catastrophic Sess
 
 ## Prioritisation and sequencing
 Prioritise hypotheses by evidence strength, reach and effort (see the skill's bucket rules), not by guessed impact. For the roadmap view, sequence:
-- **Phase 1 — Quick wins** (high impact, low effort): usually content + config on existing infrastructure (seed reviews, add images/video, fill fit content, reorder buy box, sticky ATC, back-in-stock, surface guarantee/BNPL, naming fix).
-- **Phase 2 — Structural** (high impact, medium effort): analytics hygiene first, guided configurator, reviews lifecycle + UGC, fit finder, collection overhaul.
-- **Phase 3 — Advanced** (high impact, higher effort): template consolidation, compatibility-aware cross-sell + bundles, live preview/AR.
+- **Phase 1 — Quick wins** (low effort; evidence strength per item from its hypothesis card): usually content + config on existing infrastructure (seed reviews, add images/video, fill fit content, reorder buy box, sticky ATC, back-in-stock, surface guarantee/BNPL, naming fix).
+- **Phase 2 — Structural** (medium effort): analytics hygiene first, guided configurator, reviews lifecycle + UGC, fit finder, collection overhaul.
+- **Phase 3 — Advanced** (higher effort): template consolidation, compatibility-aware cross-sell + bundles, live preview/AR.
 Show the matrix (evidence strength × effort) as a **quadrant grid**, not absolute-positioned labels (see the `report-information-design` skill for the robust component).

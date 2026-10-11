@@ -23,7 +23,7 @@
 
 **5. Evidence** — the sourced research behind the recommendations. Group by theme; mark reliability tiers; show conflicts. Include best-in-class **reference examples with links** (and "what to steal").
 
-**6. Recommendations / blueprint** — the hypotheses grouped by bucket (Instrument / Just do it / Test / Investigate), each with its evidence sources and confidence; never a promised % lift. Then plus an **annotated blueprint/wireframe** of the proposed solution (desktop + mobile, current vs recommended). Number each block and map it to the rationale + evidence.
+**6. Recommendations / blueprint** — the hypotheses grouped by bucket (Instrument / Just do it / Test / Investigate), each with its evidence sources and confidence; never a promised % lift. Then add an **annotated blueprint/wireframe** of the proposed solution (desktop + mobile, current vs recommended). Number each block and map it to the rationale + evidence.
 
 **7. Action plan** — an **evidence-strength × effort matrix** (quadrant grid), a **phased roadmap** (instrument → just-do-its → test queue → research), and the test plans for the top items with feasibility from `power.py`. Set expectations with base rates: most tested ideas do not win. End with the **metric to track** (a leading indicator on clean data).
 

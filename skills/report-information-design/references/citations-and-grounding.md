@@ -36,7 +36,7 @@ Techniques from gpt-researcher, STORM, open_deep_research, and gpt-newspaper for
 - No duplicate sources; numbers sequential and gapless.
 - Every in-text citation has a list entry; every list entry is cited at least once.
 - Every URL resolves and every load-bearing figure appears on its source page: run `python3 ${CLAUDE_PLUGIN_ROOT}/skills/report-information-design/scripts/check_citations.py <report> --claims <claims.csv>`, with each load-bearing figure listed as `url,expect` in the claims CSV (LLM research tools fabricate citations, 18% for GPT-4 in Walters & Wilder 2023, and produce dead URLs; an automated liveness check cut non-resolving URLs to under 1% in Rao et al. 2026).
-- For load-bearing claims surfaced by AI research, prefer ones that recur across independent runs or sources: citations produced by 3+ models were real 95.6% of the time vs 16.5% for single-model ones (Naser 2026).
+- For load-bearing claims surfaced by AI research, prefer ones that recur across independent runs or sources; a citation that only one model or one run produced is the most likely to be fabricated.
 - Reliability tiers applied; conflicts surfaced, not hidden.
 
 This file extends `report-structure.md` and `qa-checklist.md`.

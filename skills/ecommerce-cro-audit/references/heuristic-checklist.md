@@ -13,7 +13,7 @@ Answer format per item: `ID | Yes/No/Can't tell | where seen (screenshot + viewp
 | P2 ★ | Price is visible above the fold on mobile | Cost | Baymard PDP research |
 | P3 ★ | Add-to-cart is visible above the fold on mobile, or a sticky ATC appears on scroll (`buy_button_above_fold` covers the first viewport only and the full screenshot is not scrolled, so confirm a sticky bar by scrolling the page or ask; otherwise answer Can't tell) | Usability | Baymard; GrowthRock sticky-ATC test (+7.9% orders, single test) |
 | P4 | ATC button is visually the most prominent control in the buy box | Usability | Heuristic |
-| P5 ★ | 5+ product images including at least one in-scale (worn/held/in room) image | Motivation | Baymard: 42% judge size from images; 28% of sites lack in-scale |
+| P5 ★ | At least one product image shows the item in scale (worn/held/in room); several angles overall (heuristic, no proven minimum count) | Motivation | Baymard: 42% judge size from images; 28% of sites lack in-scale |
 | P6 ★ | Images zoom on desktop and pinch/tap on mobile | Usability | Baymard: 25% / 40% of sites fail |
 | P7 ★ | Selecting a variant updates the main image | Usability | Baymard: 54% of sites fail |
 | P8 | Visual options (colour, material) use swatches, not dropdowns | Usability | Baymard / NN/g |
