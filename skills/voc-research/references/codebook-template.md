@@ -16,6 +16,6 @@ Levers: Cost, Trust, Usability, Comprehension, Motivation (Conversion.com framew
 ## Language bank
 | theme | verbatim phrase | source (review / survey / ticket / test) | date | use in copy? |
 |---|---|---|---|---|
-| fit_uncertainty | "I never know if European sizes run small" | post-purchase survey | 2026-09 | headline candidate |
+| <theme code> | "<exact customer words, copied from the source>" | <source type> | <YYYY-MM> | <copy use?> |
 
 Copy written from these phrases goes to `conversion-copywriting`; keep the source so claims stay honest.

@@ -19,10 +19,10 @@
 
 ## Variance reduction
 - **CUPED** uses each user's pre-period behaviour to cut variance; ~50% at Bing, halving the traffic needed (Deng et al., WSDM 2013, https://exp-platform.com/cuped/). Use it whenever the tool supports it; pass `--cuped-r` to `power.py` (r = correlation between pre-period and in-test metric, often 0.3–0.7 for returning-visitor metrics, near 0 for new visitors).
-- Trigger analysis: only count visitors who actually saw the change (e.g. reached the cart for a cart test). This raises sensitivity without biasing the result.
+- Trigger analysis: restrict the analysis to visitors who were eligible to see the change (e.g. reached the cart, for a cart test). This raises sensitivity without bias only when eligibility is decided before exposure and the variant cannot change who becomes eligible; otherwise analyse all randomized visitors.
 
 ## Trust checks
-- **A/A tests:** run one when setting up a tool or changing tracking. If an A/A shows a "significant" difference, the setup is broken.
+- **A/A tests:** run one when setting up a tool or changing tracking. One "significant" A/A result can happen by chance (at the alpha rate); repeated ones, an SRM, or a systematic gap on one metric mean the setup is broken.
 - **SRM causes** (Fabijan et al. 2020): assignment bugs, redirects that drop users in one arm, bot filtering that hits arms unevenly, slower variant pages losing visitors before tracking fires, analytics joins. Run `srm_check.py` on every readout.
 - **Twyman's law:** "any figure that looks interesting or different is usually wrong." Investigate lifts above ~10% before trusting them.
 - **Novelty and carryover:** returning-visitor tests can show a novelty spike; compare week 1 with week 2+. Effects of previous tests can carry over for weeks.

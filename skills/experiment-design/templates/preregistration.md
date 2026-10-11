@@ -13,7 +13,7 @@ Because we saw **<evidence, with source and number>**, we believe **<change>** f
 - Arms and split: control vs <variants> at <split>
 - Primary metric (one):
 - Guardrails and non-inferiority margins:
-- Quality checks: SRM (p < 0.001 fails), A/A status of the tool
+- Quality checks: SRM (p < 0.001 fails), pre-exposure balance, A/A status of the tool
 - Baseline and daily eligible visitors:
 - MDE, alpha, power (from `power.py`, paste the output):
 - Duration: <N days, whole weeks, min 14> | Sequential? yes/no (tool + method)

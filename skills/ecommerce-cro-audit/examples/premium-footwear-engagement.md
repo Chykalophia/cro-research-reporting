@@ -17,9 +17,9 @@ The operative model: **lead emotional, justify rational, substantiate sustainabl
 - **Cost-per-wear caveat:** Eckmann & Reisch (*Psychology & Marketing*, 2026) found CPW framing shifts preference toward higher-quality clothing; the idea that it **can cheapen a luxury brand** was this engagement's hypothesis, not a finding of that paper [untested]. For platform/modular products use **value-multiplication** ("one pair → infinite looks / one base → a wardrobe of add-ons"), which keeps the durability/value signal without down-market framing.
 
 ## Storytelling & naming
-- Narrative measurably raises willingness-to-pay ("Significant Objects": ~2,700% from story alone; oxytocin/competence research, Zak, HBR 2014).
+- Narrative measurably raises willingness-to-pay ("Significant Objects" resold thrift items at many times their cost) [unverified: the ~2,700% figure and the Zak, HBR 2014 attribution were not traced to a primary source].
 - But users read ~28% of words and scan in an F-pattern (NN/g). Lead with a scannable 3–5 bullet "Highlights" block; keep the founder/product micro-story to 2–3 sentences.
-- **Naming:** evocative is fine *only if still legible.* Even Chanel/Prada keep names simple; confusing names deter buyers. Keep a charming name but add the plain product type + benefit, and strip symbol-soup (e.g., `^ ~ * |`). Put SEO keyword strings in an H2/meta, not the H1.
+- **Naming:** evocative is fine *only if still legible.* Many luxury houses keep product names simple [unverified]; confusing names deter buyers. Keep a charming name but add the plain product type + benefit, and strip symbol-soup (e.g., `^ ~ * |`). Put SEO keyword strings in an H2/meta, not the H1.
 - **Whimsy discipline:** playful-yet-premium works with *one* layer of wit surrounded by clarity and white space. Wall-to-wall puns tax comprehension and read as *less* premium.
 
 ## Sustainability sequencing (the data conflicts — that's the strategy)
@@ -28,5 +28,5 @@ The operative model: **lead emotional, justify rational, substantiate sustainabl
 - **Resolution:** lead with desire/beauty; deploy sustainability as **stacked, specific, verifiable reinforcement** (named materials, percentages, one third-party certification, a "your choice matters" line). Don't make it the headline for a style-first audience.
 
 ## Gifting & self-gifting
-- 45% of Americans self-gift; ~44% plan to buy luxury as gifts. Low-commitment, expressive add-ons (charms, accessories, refills) are near-perfect gifts and a low-risk entry to the ecosystem.
+- 45% of Americans self-gift; ~44% plan to buy luxury as gifts [unverified: survey source not traced; check the client's own share of gift orders instead]. Low-commitment, expressive add-ons (charms, accessories, refills) are near-perfect gifts and a low-risk entry to the ecosystem.
 - **Apply:** gift messaging, gift-ready packaging story, curated bundles, and a self-gift nudge; surface gifting reviews as social proof.

@@ -49,7 +49,7 @@ Match the user's intent to a component using `references/routing-map.md`. Quick 
 
 ## Step 3 — Show the recommended end-to-end flow
 For a full engagement, the canonical path is:
-**Brief (this skill) → /cro-audit (funnel data + rendered checklist + customer evidence → evidence-tagged hypotheses) → /experiment plan → /build-report → cro-verifier → copy variants → /experiment readout + test log.**
+**Brief (this skill) → /cro-audit (funnel data + rendered checklist + customer evidence → evidence-tagged hypotheses, test plans, report, verification) → copy variants → /experiment readout + test log.**
 Offer to kick off the first step.
 
 ## Reference map

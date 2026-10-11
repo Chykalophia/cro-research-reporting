@@ -4,7 +4,7 @@ Generic guidance for higher-priced, higher-consideration products. Treat each po
 
 ## How considered purchases get decided
 - **Emotion first, justification second.** Premium buying is commonly driven by identity, self-expression and self-reward, then rationalised with craft, materials and value. Open with the outcome or feeling; put the rational proof right after it.
-- **Segment by motive, not demographics.** Motives cluster around identity/status, self-reward, quality/craftsmanship, comfort/function and values. Post-purchase survey question "What were you looking for when you found us?" reveals which motive dominates for this client.
+- **Segment by motive, not demographics.** Motives cluster around identity/status, self-reward, quality/craftsmanship, comfort/function and values. "What were you looking for when you found us?" captures the job to be done; to see which motive dominates, ask "What mattered most to you when choosing this product?" and code the answers against these motives (`voc-research`).
 - **Risk grows with price.** Reviews matter most for expensive, unfamiliar items: going from zero to five reviews lifted purchase likelihood ~270% overall and ~380% for higher-priced products (Spiegel Research Center, 2017, https://spiegel.medill.northwestern.edu/how-online-reviews-influence-sales/).
 
 ## Price justification

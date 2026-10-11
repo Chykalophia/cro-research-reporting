@@ -72,7 +72,9 @@ def footnote_integrity(text):
     ids = set(re.findall(r'id="(s-[\w-]+)"', text))
     missing = sorted(set(refs) - ids)
     uncited = sorted(ids - set(refs))
-    nums = [int(n) for n in re.findall(r'id="s-(\d+)"', text)]
+    # displayed citation numbers (slug ids like s-spiegel carry the number only in the link text)
+    nums = [int(n) for n in re.findall(r'href="#s-[\w-]+"[^>]*>\s*(\d+)\s*</a>', text)]
+    nums += [int(n) for n in re.findall(r'id="s-(\d+)"', text)]
     gaps = sorted(set(range(1, max(nums) + 1)) - set(nums)) if nums else []
     return {"refs_without_entry": missing, "entries_never_cited": uncited, "numbering_gaps": gaps}
 

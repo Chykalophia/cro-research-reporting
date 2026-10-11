@@ -19,7 +19,7 @@ def norm_cdf(x):
 
 
 def two_sided_p(z):
-    return 2 * (1 - _N.cdf(abs(z)))
+    return math.erfc(abs(z) / math.sqrt(2))  # avoids 1 - cdf rounding to 0 in the far tail
 
 
 # --- chi-square survival function (for SRM checks) -------------------------

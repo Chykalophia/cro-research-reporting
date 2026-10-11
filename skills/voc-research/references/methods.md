@@ -34,5 +34,5 @@ Ask buyers about friction and non-buyers (via poll) about objections; the two li
 - AI can summarise recordings in bulk; a human should watch at least 10 before trusting the summary.
 
 ## Sample size rules of thumb
-- Proportions in a survey: 200 responses gives roughly ±7 points at 95% confidence on a 50% share; 100 gives ±10.
+- Proportions in a representative random sample: 200 responses gives roughly ±7 points at 95% confidence on a 50% share; 100 gives ±10. Opt-in polls and post-purchase surveys are not random samples, so treat their shares as descriptive of respondents, not as population estimates.
 - A theme mentioned by fewer than ~5% of a 200-response survey is a lead, not a finding, unless it also shows up in another source.

@@ -23,7 +23,7 @@ Apply the `voc-research` skill and follow `${CLAUDE_PLUGIN_ROOT}/skills/voc-rese
 Process:
 1. Load the feedback; record source type, count, date range and any rating field. Remove personal data (names, emails, order numbers) before analysis.
 2. If no codebook is supplied, draft one from a random 50–100 item sample using `codebook-template.md` and return it for human review before coding everything. Say so plainly.
-3. If a codebook is supplied, code a validation sample and write it to a CSV with `id,ai` columns plus the text, so a human can add a `human` column. If a human-coded sample already exists, run `scripts/agreement.py` and report the kappa per code.
+3. If a codebook is supplied, code a validation sample and write it to a CSV with `id,ai` columns plus the text, so a human can add a `human` column. If a human-coded sample already exists, run `python3 ${CLAUDE_PLUGIN_ROOT}/skills/voc-research/scripts/agreement.py <sample.csv> --a human --b ai` and report the overall and per-code kappa.
 4. Only after agreement is at or above 0.7 (or the user explicitly accepts lower), code the full set in batches, keeping prompt and model fixed.
 5. Output: a theme table (code, share, n, sources, segment differences), 2–3 verbatim quotes per theme with source type, and a language-bank table. Write the coded CSV next to the input.
 

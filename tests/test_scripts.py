@@ -81,6 +81,41 @@ class InputValidationTests(unittest.TestCase):
             quiet(test_log.main, ["--log", log, "summary"])
 
 
+class ReviewRoundTwoTests(unittest.TestCase):
+    def test_guardrail_applies_only_to_its_variant(self):
+        base = ["--control", "50000", "1000", "--variant", "50000", "1200", "--variant", "50000", "1210"]
+        out = quiet(readout.main, base + ["--guardrail", "aov@2,1000,500,1210,450,0.02", "--json"])
+        self.assertEqual([v["decision"] for v in out["variants"]], ["SHIP", "DO NOT SHIP (guardrail)"])
+        self.assertTrue(rejects(readout.main, base + ["--guardrail", "aov,1000,500,1210,450,0.02"]))
+        self.assertTrue(rejects(readout.main, base + ["--guardrail", "aov@3,1000,500,1210,450,0.02"]))
+
+    def test_guardrail_rejects_unknown_direction(self):
+        self.assertTrue(rejects(readout.main, ["--control", "100", "5", "--variant", "100", "6",
+                                               "--guardrail", "ret,100,5,100,6,0.1,lowr"]))
+
+    def test_far_tail_p_value_not_zero(self):
+        self.assertGreater(_stats.two_sided_p(12), 0)
+
+    def test_kappa_undefined_without_variation(self):
+        k, _ = agreement.kappa(["a", "a"], ["a", "a"])
+        self.assertTrue(math.isnan(k))
+
+    def test_multilabel_strips_spaces(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "s.csv")
+            with open(p, "w") as f:
+                f.write('id,human,ai\n1,"cost; fit","cost;fit"\n2,trust,trust\n3,fit,fit\n')
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                agreement.main([p])
+            self.assertIn("kappa 1.00", out.getvalue())
+            self.assertNotIn("| fit | 1", out.getvalue())
+
+    def test_footnote_gaps_from_displayed_numbers(self):
+        text = '<a href="#s-a">1</a><a href="#s-c">3</a><li id="s-a"></li><li id="s-c"></li>'
+        self.assertEqual(check_citations.footnote_integrity(text)["numbering_gaps"], [2])
+
+
 class StatsTests(unittest.TestCase):
     def test_chi2_matches_tables(self):
         self.assertAlmostEqual(_stats.chi2_sf(3.841, 1), 0.05, places=3)

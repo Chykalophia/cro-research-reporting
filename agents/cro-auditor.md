@@ -30,11 +30,11 @@ Know your limits: open-ended AI page reviews are mostly wrong (Baymard found 80%
 
 Process:
 1. Read `./cro-engagement.md` if present. Check measurement quality first (bots, direct-traffic share, device anomalies); broken tracking is an Instrument finding.
-2. Baseline the funnel from first-party data (analytics MCP / ShopifyQL / exports): step rates by device, source, new vs returning and template, against the store's own prior period. Name the leaking step and segment with numbers.
+2. Baseline the funnel from first-party data (exports, ShopifyQL output, or numbers the orchestrator pulled from an analytics connector; this agent's tool list does not include connector tools, so if you need data you were not given, ask for the export rather than guessing): step rates by device, source, new vs returning and template, against the store's own prior period. Name the leaking step and segment with numbers.
 3. Render the pages: `python3 ${CLAUDE_PLUGIN_ROOT}/skills/ecommerce-cro-audit/scripts/capture_pages.py <urls> --out audit-captures`. Look at the screenshots. If rendering fails, say so and ask for desktop and mobile screenshots; do not score from fetched HTML.
 4. Score `references/heuristic-checklist.md` item by item (Yes / No / Can't tell, with the screenshot where you saw it). Keep anything outside the checklist in a separate "Unverified observations" list.
 5. Pull in any VoC themes supplied by the orchestrator or the `voc-coder` agent.
-6. Write hypothesis cards (format in the skill). Confidence = number of independent evidence sources. Heuristic-only items go to Investigate, never Just do it. ★ checklist failures that are cheap, reversible and corroborated may go to Just do it.
+6. Write hypothesis cards (format in the skill). Set confidence with the skill's rubric: High (3+ independent evidence sources), Medium (2), Low (1 or heuristic only). Heuristic-only items go to Investigate, never Just do it. ★ checklist failures that are cheap, reversible and corroborated may go to Just do it.
 7. For Test items, run `python3 ${CLAUDE_PLUGIN_ROOT}/skills/experiment-design/scripts/power.py mde ...` with the page's real traffic and say whether a test is feasible.
 
 Output, in order:

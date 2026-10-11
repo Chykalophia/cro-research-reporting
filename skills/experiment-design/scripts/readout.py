@@ -15,6 +15,9 @@ Continuous metric (n, mean, sd), e.g. revenue per visitor:
 Guardrail (name,ctrl_n,ctrl_conv,var_n,var_conv,margin[,lower]); "lower" means
 lower is better (e.g. return rate). margin 0.02 = may not be worse by >2% relative:
   --guardrail "refund_rate,1205,61,1302,70,0.10,lower"
+With several variants, each guardrail names the variant it measures (name@N,
+N counting from 1), since its counts belong to one control/variant comparison:
+  --guardrail "refund_rate@2,1205,61,1250,66,0.10,lower"
 """
 import argparse
 import json
@@ -61,12 +64,22 @@ def guardrail_check(spec, alpha):
     if len(parts) not in (6, 7):
         raise ValueError(f"bad guardrail spec: {spec}")
     name, n1, x1, n2, x2, margin = parts[0], int(parts[1]), int(parts[2]), int(parts[3]), int(parts[4]), float(parts[5])
-    lower_better = len(parts) == 7 and parts[6].lower() == "lower"
+    if len(parts) == 7 and parts[6].lower() != "lower":
+        raise ValueError(f"bad guardrail direction '{parts[6]}' (only 'lower' is allowed): {spec}")
+    if n1 <= 0 or n2 <= 0 or not 0 <= x1 <= n1 or not 0 <= x2 <= n2 or margin <= 0:
+        raise ValueError(f"guardrail needs visitors > 0, conversions between 0 and visitors, margin > 0: {spec}")
+    variant = 1
+    if "@" in name:
+        name, _, idx = name.rpartition("@")
+        if not idx.isdigit() or int(idx) < 1:
+            raise ValueError(f"bad guardrail variant '@{idx}': {spec}")
+        variant = int(idx)
+    lower_better = len(parts) == 7
     # one-sided non-inferiority at alpha: use a (1 - 2*alpha) two-sided interval bound
     r = compare_prop(n1, x1, n2, x2, 2 * alpha)
     lo, hi = r["rel_ci"]
     ok = (hi < margin) if lower_better else (lo > -margin)
-    return {"name": name, "rel_lift": r["rel_lift"], "rel_ci": r["rel_ci"], "margin": margin,
+    return {"name": name, "variant": variant, "rel_lift": r["rel_lift"], "rel_ci": r["rel_ci"], "margin": margin,
             "lower_is_better": lower_better, "non_inferior": ok}
 
 
@@ -97,10 +110,18 @@ def main(argv=None):
 
     counts = [int(args.control[0])] + [int(v[0]) for v in args.variant]
     srm_r = srm(counts, args.weights)
-    guards = [guardrail_check(g, args.alpha) for g in args.guardrail]
+    try:
+        guards = [guardrail_check(g, args.alpha) for g in args.guardrail]
+    except ValueError as e:
+        ap.error(str(e))
+    if k > 1 and any("@" not in g.split(",")[0] for g in args.guardrail):
+        ap.error("with several variants, name each guardrail's variant: --guardrail 'name@N,...'")
+    if any(g["variant"] > k for g in guards):
+        ap.error(f"a guardrail names a variant beyond the {k} given")
 
     results = []
-    for v in args.variant:
+    for i, v in enumerate(args.variant, 1):
+        own = [g for g in guards if g["variant"] == i]
         if args.type == "prop":
             r = compare_prop(int(args.control[0]), int(args.control[1]), int(v[0]), int(v[1]), alpha)
             base = r["control"]
@@ -116,7 +137,7 @@ def main(argv=None):
             decision = "DO NOT READ (SRM)"
         elif sig and r["abs_diff"] < 0:
             decision = "DO NOT SHIP"
-        elif any(not g["non_inferior"] for g in guards):
+        elif any(not g["non_inferior"] for g in own):
             decision = "DO NOT SHIP (guardrail)"
         elif sig and r["abs_diff"] > 0:
             decision = "SHIP"
@@ -157,7 +178,8 @@ def main(argv=None):
         for g in guards:
             lo, hi = g["rel_ci"]
             word = "lower is better" if g["lower_is_better"] else "higher is better"
-            print(f"- {g['name']} ({word}): {pct(g['rel_lift'], 1)} [{pct(lo, 1)}, {pct(hi, 1)}], "
+            tag = f" [variant {g['variant']}]" if k > 1 else ""
+            print(f"- {g['name']}{tag} ({word}): {pct(g['rel_lift'], 1)} [{pct(lo, 1)}, {pct(hi, 1)}], "
                   f"margin {pct(g['margin'], 0)} -> {'non-inferior' if g['non_inferior'] else 'FAIL / not shown safe'}")
     return out
 

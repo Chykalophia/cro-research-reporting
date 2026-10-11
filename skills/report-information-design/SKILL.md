@@ -23,12 +23,12 @@ Turn findings into a document a busy decision-maker can scan in two minutes and 
 3. **Design for scanning** (headings, short paragraphs, callouts, visuals).
 4. **Show, don't tell** (charts, annotated blueprints over prose).
 5. **Cite inline + collect sources** with reliability tiers and the gapless citation spec (`references/citations-and-grounding.md`).
-6. **Prioritize visibly** (impact/effort matrix + phased roadmap).
+6. **Prioritize visibly** (evidence-strength × effort matrix + phased roadmap).
 7. **Calibrate to audience** (internal-technical vs client-facing).
 8. **Self-contained, responsive, print-friendly, QA'd** before delivery.
 
 ## Default report structure
-Executive summary → data/baseline → diagnosis (a model, not symptoms) → current-state teardown → evidence (tiered sources) → recommendations + annotated blueprint → action plan (impact/effort matrix + phased roadmap + the metric) → sources & method. Templates in `references/report-structure.md`.
+Executive summary → data/baseline → diagnosis (a model, not symptoms) → current-state teardown → evidence (tiered sources) → recommendations + annotated blueprint → action plan (evidence-strength × effort matrix + phased roadmap + the metric) → sources & method. Templates in `references/report-structure.md`.
 
 ## Build & cite
 - Build with the render-safe component library in `references/html-components.md`. Obey the rules: never put text inside data-width bars (use label|track|value rows); never use absolute-positioned label clouds (use quadrant grids); collapse every grid on mobile; keep prose out of visuals; match the subject's real brand tokens.

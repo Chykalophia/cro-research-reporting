@@ -22,7 +22,7 @@ Plan tests that can actually detect something, read them out honestly, and keep 
 - **Many "wins" are false or inflated.** At typical success rates a quarter or more of significant results are false positives, and underpowered winners overstate their effect.
 - **Tests break.** About 6% of Microsoft tests have a sample ratio mismatch (SRM), which invalidates them.
 
-So: a recommendation is a hypothesis until a sound test (or a monitored rollout) confirms it.
+So: a recommendation is a hypothesis until a sound test confirms it. A monitored rollout gives directional evidence, not confirmation.
 
 ## Workflow
 1. **Pre-register** with `templates/preregistration.md`: hypothesis tied to evidence, one primary metric, guardrails, MDE, duration, stop rule. Write it before launch.
@@ -31,7 +31,7 @@ So: a recommendation is a hypothesis until a sound test (or a monitored rollout)
    - `mde` mode: what the available traffic can detect in a fixed window.
    - If the detectable MDE is above ~10% relative, or the run is over ~8 weeks, follow `references/low-traffic.md` instead of launching a test that will end inconclusive.
 3. **Run it** for whole weeks, at least 14 days. Do not stop early on significance unless the design is sequential (`references/test-design.md`).
-4. **Read it out** with `scripts/readout.py` (it runs the SRM check, intervals, guardrails, Twyman flag, exaggeration estimate and the decision rule). Present it with `report-information-design/references/experiment-readout.md`.
+4. **Read it out** with `scripts/readout.py`, passing the configured split with `--weights` when arms are not equal (it runs the SRM check, intervals, guardrails, Twyman flag, exaggeration estimate and the decision rule). Present it with `report-information-design/references/experiment-readout.md`.
 5. **Log it** with `scripts/test_log.py add`, win or lose. Use `summary` and `prior` to rank the next round by the client's own lever win rates.
 
 ## Scripts (Python 3 standard library, no installs)
@@ -51,7 +51,7 @@ Run from the skill folder, e.g. `python3 ${CLAUDE_PLUGIN_ROOT}/skills/experiment
 - `templates/preregistration.md` — the plan to fill in before launch.
 
 ## Engagement context
-Read `./cro-engagement.md` first (created by `getting-started`). Use its monthly traffic per template, testing tool, and test-log path. If no log exists, offer `test_log.py init`.
+Read `./cro-engagement.md` first (created by `getting-started`). Use its daily eligible visitors per template, testing tool, and test-log path. If no log exists, offer `test_log.py init`.
 
 ## Related skills
 `ecommerce-cro-audit` produces the hypotheses; `voc-research` supplies the evidence behind them; `report-information-design` formats the readout; `conversion-copywriting` writes variants.

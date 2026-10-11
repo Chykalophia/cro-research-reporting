@@ -19,7 +19,7 @@ Use these to set expectations with clients and to sanity-check "impact" claims i
 - Bing: every 100 ms of speed was worth 0.6% revenue; big positive effects are rare, so be suspicious of them. (Kohavi et al., "Seven Rules of Thumb", KDD 2014 [Tier 1] https://exp-platform.com/rules-of-thumb/)
 
 ## False positives and inflation
-- At an 8% success rate with 80% power, ~26% of significant results are false; at 20% power, ~59%. (Intuition Busters.)
+- At an 8% success rate with 80% power, ~26% of significant positive results are false; at 20% power, ~59%. (Intuition Busters; these count only positive results at a two-sided 5% threshold. Counting significance in either direction raises the share.)
 - Optimizely data: ~70% of effects are true nulls; false discovery rate 18% with one variant, 41% with six; stopping one day late raised FDR from 17.5% to 21.8%. (Berman & Van den Bulte, Management Science 2021 [Tier 1] https://www.gwern.net/doc/statistics/decision/2021-berman.pdf)
 - About 73% of experimenters stopped tests as soon as they crossed 90% confidence (working-paper estimate). (Berman et al. 2018 [working paper] https://papers.ssrn.com/abstract=3204791)
 - Underpowered significant results exaggerate the effect (Type M error), e.g. 9.7x at 6% power. (Gelman & Carlin 2014 [Tier 1] https://sites.stat.columbia.edu/gelman/research/published/PPS551642_REV2.pdf)
