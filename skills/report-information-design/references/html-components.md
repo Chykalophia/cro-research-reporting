@@ -28,7 +28,7 @@ Match the subject's real brand: pull actual tokens from their theme/site (backgr
   <div style="background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:14px">
     <div style="font-size:1.6rem;font-weight:800;color:var(--bad)">0.8%</div>
     <div style="font-size:.76rem;color:var(--muted);font-weight:600">Add-to-cart rate</div>
-    <div style="font-size:.72rem;color:#8a979e">~9× below the ~7.5% norm</div>
+    <div style="font-size:.72rem;color:#8a979e">down from 1.9% same period last year</div>
   </div>
   <!-- repeat -->
 </div>

@@ -10,7 +10,7 @@ description: >
 license: MIT
 metadata:
   author: Chykalophia
-  version: "0.2.0"
+  version: "0.4.0"
 ---
 
 # Report & Information Design
@@ -35,19 +35,21 @@ Executive summary → data/baseline → diagnosis (a model, not symptoms) → cu
 - Generate **outline-first, section-by-section** (pass prior headers in to avoid duplication), then a polish pass. Cite with the **gapless sequential spec** and a one-per-line Sources list (`references/citations-and-grounding.md`).
 
 ## QA before delivering
-Run `references/qa-checklist.md` (tag balance, `node --check` on any JS, a render check, link/footnote integrity) plus the grounding gate from `references/citations-and-grounding.md` (every load-bearing claim cited; numbers/dates attributed; no sources dropped in a merge).
+Run `references/qa-checklist.md` (tag balance, `node --check` on any JS, a render check, `scripts/check_citations.py` for links, figures and footnotes) plus the grounding gate from `references/citations-and-grounding.md` (every load-bearing claim cited; numbers/dates attributed; no sources dropped in a merge).
 
 ## Reference map
 - `references/report-structure.md` — section templates, IA principles, audience calibration, the annotated-blueprint pattern.
 - `references/html-components.md` — render-safe HTML/CSS component library + the rendering-bug rules.
 - `references/citations-and-grounding.md` — citation spec, outline-first generation, question-type templates, tone presets, and the grounding/self-verification gate.
 - `references/qa-checklist.md` — pre-delivery verification steps and commands.
+- `references/experiment-readout.md` — the one-page A/B test readout (numbers from `experiment-design/scripts/readout.py`).
+- `scripts/check_citations.py` — checks every cited URL resolves, load-bearing numbers appear on their source page, and footnotes are gapless.
 
 ## Engagement context
 At the start of a task, check for the engagement brief (default `./cro-engagement.md`, created by the `getting-started` skill / `/kickoff`). If it exists, read it first and match the deliverable's audience (internal vs client-facing) and the brand voice/tokens it records. If it's missing and the work is more than a one-off, offer to capture one via `getting-started`.
 
 ## Related skills
-`deep-research-synthesis` (supplies tiered evidence), `ecommerce-cro-audit` (a frequent input). Agents: `report-builder` runs this skill; `cro-verifier` checks citations and grounding before ship.
+`deep-research-synthesis` (supplies tiered evidence), `ecommerce-cro-audit` (a frequent input), `experiment-design` (test readouts), `voc-research` (customer themes and quotes). Agents: `report-builder` runs this skill; `cro-verifier` checks citations and grounding before ship.
 
 ## Guardrails
 Don't put explanatory prose inside visuals. Don't ship a visual that could overlap/clip at any width. Always verify before presenting; offer a browser screenshot if you can't render locally.

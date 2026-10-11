@@ -10,7 +10,7 @@ description: >
 license: MIT
 metadata:
   author: Chykalophia
-  version: "0.3.0"
+  version: "0.4.0"
 ---
 
 # Getting Started (begin here)
@@ -18,7 +18,7 @@ metadata:
 The front door. Orient the user, capture a reusable engagement brief, then route to the right tool. Run this whenever someone is starting, is unsure which skill applies, or asks something broad.
 
 ## What this toolkit does (say this plainly)
-A strategist's kit to: **audit** a conversion funnel, run **deep sourced research**, write **conversion copy**, sharpen **positioning/outbound**, and turn it into **polished reports + redesign blueprints** — with a **verifier** that checks the work before it ships.
+A strategist's kit to: **audit** a conversion funnel, **research customers**, **plan and read out tests**, run **deep sourced research**, write **conversion copy**, sharpen **positioning/outbound**, and turn it into **polished reports + redesign blueprints**, with a **verifier** that checks the work before it ships. It uses AI where the evidence says AI is reliable (coding feedback, checking pages against fixed rules, drafting variants, running the maths) and keeps judgement calls with you.
 
 ## Step 1 — Engagement brief (persistent context)
 Before doing real work, establish the shared context every other skill reads first.
@@ -29,7 +29,8 @@ Before doing real work, establish the shared context every other skill reads fir
    - **Surface in scope** (PDP / collection / cart / checkout / landing / lead-gen / SaaS signup / whole funnel).
    - **Primary goal & metric** (e.g., add-to-cart rate, RPV, lead conversion).
    - **Brand voice & tokens** (tone, banned words, colors/fonts/logo if known).
-   - **Connected data/tools** (analytics/Shopify MCP, web search, theme/codebase access).
+   - **Connected data/tools** (analytics/Shopify MCP, web search, theme/codebase access), the **testing tool**, and **traffic per key template**.
+   - **Research assets** (review export, tickets, past surveys, recordings) and the **test log** path.
    - Known constraints (timeline, what's off-limits, who the audience for deliverables is).
 3. Write/update `./cro-engagement.md` from the template. Keep it short and current; confirm before overwriting.
 
@@ -40,13 +41,15 @@ Match the user's intent to a component using `references/routing-map.md`. Quick 
 - "Why isn't this converting / audit this page or funnel" → **/cro-audit** or the `ecommerce-cro-audit` skill (it can delegate to the `cro-auditor` agent).
 - "Research X thoroughly / with sources" → **/deep-research** or `deep-research-synthesis` (fans out `deep-researcher` agents).
 - "Turn this into a report / write it up" → **/build-report** or `report-information-design` (or the `report-builder` agent).
+- "What are customers saying / analyse reviews / survey questions / user test" → `voc-research` (bulk coding via the `voc-coder` agent).
+- "Plan / size / read out a test", "how long should it run", "did it win" → **/experiment** or `experiment-design`.
 - "Write/rewrite copy, headline, CTA, email, ad" → `conversion-copywriting`.
 - "Cold outreach, follow-up cadence, positioning, value prop, qualify a deal" → `outbound-and-positioning`.
 - "Check this before it ships" → the `cro-verifier` agent.
 
 ## Step 3 — Show the recommended end-to-end flow
 For a full engagement, the canonical path is:
-**Brief (this skill) → /cro-audit (grounds in data, fans out research + page diagnostic) → /build-report (assemble) → cro-verifier (pre-ship check) → conversion-copywriting / outbound-and-positioning for the language.**
+**Brief (this skill) → /cro-audit (funnel data + rendered checklist + customer evidence → evidence-tagged hypotheses) → /experiment plan → /build-report → cro-verifier → copy variants → /experiment readout + test log.**
 Offer to kick off the first step.
 
 ## Reference map

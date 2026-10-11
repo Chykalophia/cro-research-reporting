@@ -1,0 +1,21 @@
+# Codebook and Language Bank Templates
+
+## Codebook (one row per code)
+| id | label | lever | definition | include if | exclude if | example 1 | example 2 |
+|---|---|---|---|---|---|---|---|
+| cost_shipping | Shipping cost surprise | Cost | Mentions shipping, tax or duty cost as a reason to hesitate | Cost appears late or is higher than expected | General "too expensive" (use cost_price) | "Shipping doubled the price" | "Didn't know about duties until checkout" |
+| fit_uncertainty | Unsure about size/fit | Usability | Doubt about which size or whether it fits | Asks about sizing, compares to other brands | Complaints after receiving (use fit_actual) | "Do these run small?" | "I'm between sizes" |
+| none | No codable reason | — | Blank, "nothing", or off-topic | — | — | "nope" | "n/a" |
+
+Levers: Cost, Trust, Usability, Comprehension, Motivation (Conversion.com framework) so themes line up with the test log.
+
+## Theme summary (for the report)
+| theme (code) | share of responses | n | sources | segment differences | page element | hypothesis |
+|---|---|---|---|---|---|---|
+
+## Language bank
+| theme | verbatim phrase | source (review / survey / ticket / test) | date | use in copy? |
+|---|---|---|---|---|
+| fit_uncertainty | "I never know if European sizes run small" | post-purchase survey | 2026-09 | headline candidate |
+
+Copy written from these phrases goes to `conversion-copywriting`; keep the source so claims stay honest.
