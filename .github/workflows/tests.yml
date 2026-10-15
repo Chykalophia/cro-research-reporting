@@ -1,0 +1,24 @@
+name: tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests (standard library only)
+        run: python -m unittest discover -s tests -v
+      - name: Manifests are valid JSON
+        run: |
+          python -m json.tool .claude-plugin/plugin.json > /dev/null
+          python -m json.tool .claude-plugin/marketplace.json > /dev/null
+          python -m json.tool evals/triggers.json > /dev/null
